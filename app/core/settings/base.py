@@ -1,7 +1,9 @@
 import os
 from enum import Enum
 from pathlib import Path
+from typing import Dict, Optional
 from pydantic import BaseSettings
+from pydantic.errors import cls_kwargs
 from app import main
 
 
@@ -21,16 +23,29 @@ class BaseAppSettings(BaseSettings):
 
     # Kafka
     BOOTSTRAP_SERVERS: str
-    SECURITY_PROTOCOL: str
-    SASL_MECHANISMS: str
-    SASL_USERNAME: str
-    SASL_PASSWORD: str
+    SECURITY_PROTOCOL: Optional[str]
+    SASL_MECHANISMS: Optional[str]
+    SASL_USERNAME: Optional[str]
+    SASL_PASSWORD: Optional[str]
 
     # Confluent Cloud Schema Registry
-    SCHEMA_REGISTRY_URL: str
-    BASIC_AUTH_CREDENTIALS_SOURCE: str
-    BASIC_AUTH_USER_INFO: str
+    SCHEMA_REGISTRY_URL: Optional[str]
+    BASIC_AUTH_CREDENTIALS_SOURCE: Optional[str]
+    BASIC_AUTH_USER_INFO: Optional[str]
+
+    config_key_map: Dict[str, str] = {"BOOTSTRAP_SERVERS": "bootstrap.servers",
+                                      "SECURITY_PROTOCOL": "security.protocol",
+                                      "SASL_MECHANISMS": "sasl.mechanisms",
+                                      "SASL_USERNAME": "sasl.username",
+                                      "SASL_PASSWORD": "sasl.password"}
 
     class Config:
         env_file = Path(f"{get_root_dir()}/.env")
         env_file_encoding = 'utf-8'
+
+    def get_kafka_config(self) -> dict:
+        final = {}
+        for k in self.config_key_map.keys():
+            if getattr(self, k):
+                final.update({self.config_key_map[k]: getattr(self, k)})
+        return final

@@ -7,12 +7,7 @@ from app.core import config
 
 def get_kafka_config():
     settings = config.get_app_settings()
-    kconf = {"bootstrap.servers": settings.BOOTSTRAP_SERVERS,
-             "security.protocol": settings.SECURITY_PROTOCOL,
-             "sasl.mechanisms": settings.SASL_MECHANISMS,
-             "sasl.username": settings.SASL_USERNAME,
-             "sasl.password": settings.SASL_PASSWORD,
-             }
+    kconf = settings.get_kafka_config()
     return kconf
 
 
