@@ -32,7 +32,7 @@ View your changes by testing your code against your local Confluent Cloud platfo
 
 ## Get the style right
 
-We're using pylint linter to style our code base. Note: pylint lineter will be added in future releases of PyHydra
+We're using pre-commit git hook to make sure the coding style and format adheres to a certain standard. This also allows code reviewers to focus on the logic of the changes rather than nitpicking on formats and style. You can install the pre-commit hook using `pre-commit install`. pre-commit hooks will automatically check for errors when you commit your staged files. You can also manually run pre-commit using `pre-commit run --all-files`
 
 ## Make a Pull Request
 
