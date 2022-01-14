@@ -48,8 +48,8 @@ All changes to the code base start with creating an issue. When you have resolve
 
 ## Authors
 
-Maintainers of this project include - [Diwanshu Shekhar]
-(mailto:diwanshu@gmail.com)
+Maintainers of this project include - [Diwanshu Shekhar](mailto:diwanshu@gmail.com)
+
 Contributors name will appear below.
 
 ## License
