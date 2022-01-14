@@ -46,7 +46,5 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 ## Contributing
 All changes to the code base start with creating an issue. When you have resolved the issue, you can request to merge your changes to th code base using a Pull Request. Please read through our [contributing guidelines](https://github.com/realvisiontv/PyHydra/blob/ab070d5bd8a3927827e5eb96fc99939d20d7686e/CONTRIBUTING.md) and our policy on [code of conduct](https://github.com/realvisiontv/PyHydra/blob/efda78268acbffc8a194e20f822547cdc7a6caa5/CODE_OF_CONDUCT.md)
 
-Please make sure to update tests as appropriate.
-
 ## License
 [Apache 2](https://choosealicense.com/licenses/apache-2.0/)
