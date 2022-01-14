@@ -1,12 +1,8 @@
-from asyncio.futures import Future
-from fastapi import APIRouter, Depends, HTTPException
-from app.models.domain import KafkaMessage
-from app.core import events
-
-
-import confluent_kafka
 from confluent_kafka import KafkaException, Message
-from time import time
+from fastapi import APIRouter, HTTPException
+
+from app.core import events
+from app.models.domain import KafkaMessage
 
 router = APIRouter()
 
@@ -15,10 +11,15 @@ router = APIRouter()
 async def send_msg(topic: str, msg: KafkaMessage):
     try:
         result: Message = await events.aio_producer.produce(topic, msg.data)
-        return {"timestamp": result.timestamp(), "ack": {"key": result.key(),
-                                                         "topic": result.topic(),
-                                                         "partition": result.partition(),
-                                                         "offset": result.offset()}}
+        return {
+            "timestamp": result.timestamp(),
+            "ack": {
+                "key": result.key(),
+                "topic": result.topic(),
+                "partition": result.partition(),
+                "offset": result.offset(),
+            },
+        }
     except KafkaException as ex:
         raise HTTPException(status_code=500, detail=ex.args[0].str())
 

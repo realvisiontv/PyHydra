@@ -1,13 +1,9 @@
 import asyncio
-from asyncio.tasks import Task
+from concurrent.futures import ThreadPoolExecutor as Executor
+from threading import Thread
+
 import confluent_kafka
 from confluent_kafka import KafkaException
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from time import time
-from threading import Thread
-import uvicorn
-from concurrent.futures import ThreadPoolExecutor as Executor
 
 
 class AIOProducer:
@@ -29,18 +25,23 @@ class AIOProducer:
             err (KafkaError): The error that occurred on None on success.
             msg (Message): The message that was produced or failed.
         Note:
-            In the delivery report callback the Message.key() and Message.value()
-            will be the binary format as encoded by any configured Serializers and
-            not the same object that was passed to produce().
-            If you wish to pass the original object(s) for key and value to delivery
-            report callback we recommend a bound callback or lambda where you pass
-            the objects along.
+            In the delivery report callback the Message.key() and
+            Message.value() will be the binary format as encoded
+            by any configured Serializers and not the same object
+            that was passed to produce(). If you wish to pass the
+            original object(s) for key and value to delivery report
+            callback we recommend a bound callback or lambda where
+            you pass the objects along.
         """
         if err is not None:
-            print("Delivery failed for User record {}: {}".format(msg.key(), err))
+            print(
+                "Delivery failed for User record {}: {}".format(msg.key(), err)
+            )
             return
-        print('User record {} successfully produced to {} [{}] at offset {}'.format(
-            msg.key(), msg.topic(), msg.partition(), msg.offset()))
+        print(
+            f"User record {msg.key()} successfully produced to {msg.topic()}"
+            f"[{msg.partition()}] at offset {msg.offset()}"
+        )
 
     def _poll_loop(self):
         while not self._cancelled:
@@ -59,9 +60,12 @@ class AIOProducer:
 
         def ack(err, msg):
             if err:
-                self._loop.call_soon_threadsafe(result.set_exception, KafkaException(err))
+                self._loop.call_soon_threadsafe(
+                    result.set_exception, KafkaException(err)
+                )
             else:
                 self._loop.call_soon_threadsafe(result.set_result, msg)
+
         self._producer.produce(topic, value, on_delivery=ack)
         return result
 

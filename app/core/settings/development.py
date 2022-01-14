@@ -1,5 +1,4 @@
 import logging
-import os
 
 from app.core.settings.app import AppSettings
 
@@ -10,4 +9,3 @@ class DevAppSettings(AppSettings):
     title: str = "Development PyHydra"
 
     logging_level: int = logging.DEBUG
-
