@@ -67,4 +67,3 @@ A PR can only be merged into master by a maintainer if:
 * It is up to date with current master
 
 Any maintainer is allowed to merge a PR if all of these conditions are met.
-

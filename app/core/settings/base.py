@@ -1,10 +1,8 @@
-import os
 from enum import Enum
 from pathlib import Path
 from typing import Dict, Optional
+
 from pydantic import BaseSettings
-from pydantic.errors import cls_kwargs
-from app import main
 
 
 def get_root_dir():
@@ -33,15 +31,17 @@ class BaseAppSettings(BaseSettings):
     BASIC_AUTH_CREDENTIALS_SOURCE: Optional[str]
     BASIC_AUTH_USER_INFO: Optional[str]
 
-    config_key_map: Dict[str, str] = {"BOOTSTRAP_SERVERS": "bootstrap.servers",
-                                      "SECURITY_PROTOCOL": "security.protocol",
-                                      "SASL_MECHANISMS": "sasl.mechanisms",
-                                      "SASL_USERNAME": "sasl.username",
-                                      "SASL_PASSWORD": "sasl.password"}
+    config_key_map: Dict[str, str] = {
+        "BOOTSTRAP_SERVERS": "bootstrap.servers",
+        "SECURITY_PROTOCOL": "security.protocol",
+        "SASL_MECHANISMS": "sasl.mechanisms",
+        "SASL_USERNAME": "sasl.username",
+        "SASL_PASSWORD": "sasl.password",
+    }
 
     class Config:
         env_file = Path(f"{get_root_dir()}/.env")
-        env_file_encoding = 'utf-8'
+        env_file_encoding = "utf-8"
 
     def get_kafka_config(self) -> dict:
         final = {}

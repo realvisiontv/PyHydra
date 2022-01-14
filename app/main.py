@@ -1,7 +1,8 @@
+from fastapi import FastAPI
+
+from app.api.routes.base import router as api_router
 from app.core import config
 from app.core.events import create_start_app_handler, create_stop_app_handler
-from fastapi import FastAPI
-from app.api.routes.base import router as api_router
 
 
 def get_application() -> FastAPI:
@@ -26,8 +27,10 @@ def get_application() -> FastAPI:
         create_stop_app_handler(application),
     )
 
-    # application.add_exception_handler(HTTPException, http_error_handler)
-    # application.add_exception_handler(RequestValidationError, http422_error_handler)
+    # application.add_exception_handler(HTTPException,
+    #                                   http_error_handler)
+    # application.add_exception_handler(RequestValidationError,
+    #                                   http422_error_handler)
 
     application.include_router(api_router, prefix=settings.api_prefix)
 

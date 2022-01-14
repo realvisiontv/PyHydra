@@ -8,7 +8,7 @@ from app.core.settings.production import ProdAppSettings
 
 environments: Dict[AppEnvTypes, Type[AppSettings]] = {
     AppEnvTypes.dev: DevAppSettings,
-    AppEnvTypes.prod: ProdAppSettings
+    AppEnvTypes.prod: ProdAppSettings,
 }
 
 

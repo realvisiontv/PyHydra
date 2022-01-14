@@ -3,3 +3,4 @@ fastapi
 pydantic
 uvicorn
 pydantic[dotenv]
+pre-commit

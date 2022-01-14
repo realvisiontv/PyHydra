@@ -1,7 +1,7 @@
 # PyHydra
 
-PyHydra is a web api service open sourced by [Real Vision](realvision.com) that allows data replication to various sinks such as Kafka, S3 etc. 
-The service delivers web clients' json payloads to Kafka topics asynchronously. While services for Kafka sinks are 
+PyHydra is a web api service open sourced by [Real Vision](realvision.com) that allows data replication to various sinks such as Kafka, S3 etc.
+The service delivers web clients' json payloads to Kafka topics asynchronously. While services for Kafka sinks are
 currently under development, support for other sink platforms will be added in the future.
 
 ## Project Dependencies
